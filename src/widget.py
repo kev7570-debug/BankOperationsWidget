@@ -3,6 +3,7 @@ from datetime import datetime
 from src.masks import get_mask_card_number, get_mask_account
 import re  # Необходимый модуль для регулярного выражения
 
+
 def mask_account_card(input_string: str) -> str:
     """Получает строку с типом карты/счета и номером и возвращает замаскированную версию"""
     parts = input_string.rsplit(None, 1)
@@ -31,8 +32,9 @@ def mask_account_card(input_string: str) -> str:
 
 def get_date(date_string: str) -> str:
     """Преобразует дату в формат дд.мм.гггг"""
-    dt = datetime.fromisoformat(date_string[:-7]) #Отрезание микросекунд
+    dt = datetime.fromisoformat(date_string[:-7])  # Отрезание микросекунд
     return dt.strftime("%d.%m.%Y")
+
 
 
 
