@@ -13,9 +13,3 @@ def get_mask_account(account_number: int) -> str:
     last_four_digits = f"{account_number % 10000:04d}"
     return f"**{last_four_digits}"
 
-
-
-
-
-
-

@@ -64,8 +64,3 @@ ascending_sorted_transactions = sort_by_date(transactions, reverse=False)
 
 print("Отсортированные операции по убыванию:", sorted_transactions)
 print("Отсортированные операции по возрастанию:", ascending_sorted_transactions)
-
-
-
-
-

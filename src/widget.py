@@ -34,9 +34,3 @@ def get_date(date_string: str) -> str:
     """Преобразует дату в формат дд.мм.гггг"""
     dt = datetime.fromisoformat(date_string[:-7])  # Отрезание микросекунд
     return dt.strftime("%d.%m.%Y")
-
-
-
-
-
-
