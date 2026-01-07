@@ -31,7 +31,8 @@ exclude = 'venv'
 
 [tool.black]
 line-length = 119
-exclude = .git
+exclude = [".git"]
+
 
 [tool.isort]
 line_lenght = 119
