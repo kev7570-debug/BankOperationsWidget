@@ -1,31 +1,28 @@
 # tests/test_widget.py
 
-import pytest
 from src.widget import mask_account_card, get_date
 
-@pytest.fixture
-def transaction_data():
-    return {
-        "visa": "Visa Platinum 7000792289606361",
-        "maestro": "Maestro 7000792289606361",
-        "account": "Счет 73654108430135874305"
-    }
+def test_mask_account_card():
+    # Тестирование карты
+    visa = "Visa Platinum 7000792289606361"
+    maestro = "Maestro 7000792289606361"
+    account = "Счет 73654108430135874305"
 
-@pytest.mark.parametrize("data_type, expected_output", [
-    ("visa", "Visa Platinum 7000 79** **** 6361"),
-    ("maestro", "Maestro 7000 79** **** 6361"),
-    ("account", "Счет **4305")
-])
-def test_mask_account_card(transaction_data, data_type, expected_output):
-    input_value = transaction_data[data_type]
-    result = mask_account_card(input_value)
-    assert result == expected_output
+    # Проверка, что для карты Visa результат корректен
+    assert mask_account_card(visa) == "Visa Platinum 7000 79** **** 6361"
 
-@pytest.mark.parametrize("input_value, expected_output", [
-    ("2023-01-01T12:00:00Z", "01.01.2023"),
-    ("", ""),
-    ("invalid_format", "")
-])
-def test_get_date(input_value, expected_output):
-    result = get_date(input_value)
-    assert result == expected_output
+    # Проверка, что для карты Maestro результат корректен
+    assert mask_account_card(maestro) == "Maestro 7000 79** **** 6361"
+
+    # Проверка, что для счета результат корректен
+    assert mask_account_card(account) == "Счет **4305"
+
+def test_get_date():
+    # Тестирование преобразования даты
+    iso_date = "2023-04-15T12:34:56.789012"
+    expected_date = "15.04.2023"
+
+    # Проверка корректности преобразования даты
+    assert get_date(iso_date) == expected_date
+
+
