@@ -1,6 +1,7 @@
 # tests/test_widget.py
 
-from src.widget import mask_account_card, get_date
+from src.widget import get_date, mask_account_card
+
 
 def test_mask_account_card():
     # Тестирование карты
@@ -17,6 +18,7 @@ def test_mask_account_card():
     # Проверка, что для счета результат корректен
     assert mask_account_card(account) == "Счет **4305"
 
+
 def test_get_date():
     # Тестирование преобразования даты
     iso_date = "2023-04-15T12:34:56.789012"
@@ -24,5 +26,3 @@ def test_get_date():
 
     # Проверка корректности преобразования даты
     assert get_date(iso_date) == expected_date
-
-

@@ -2,6 +2,7 @@
 
 import pytest
 
+
 @pytest.fixture
 def transaction_data():
     return {

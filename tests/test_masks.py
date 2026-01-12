@@ -1,6 +1,7 @@
 # tests/test_masks.py
 
-from src.masks import get_mask_card_number, get_mask_account
+from src.masks import get_mask_account, get_mask_card_number
+
 
 def test_get_mask_card_number():
     # Тестирование стандартной карты
@@ -18,6 +19,7 @@ def test_get_mask_card_number():
         assert False, "Функция должна выбросить ошибку при недостаточном числе символов!"
     except Exception as e:
         assert isinstance(e, ValueError), "Ошибка должна быть типа ValueError"
+
 
 def test_get_mask_account():
     # Тестирование стандартного счета
