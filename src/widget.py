@@ -1,7 +1,9 @@
-from typing import Optional
-from datetime import datetime
-from src.masks import get_mask_card_number, get_mask_account
 import re  # Необходимый модуль для регулярного выражения
+from datetime import datetime
+from typing import Optional
+
+from src.masks import get_mask_account, get_mask_card_number
+
 
 def mask_account_card(input_string: str) -> str:
     """Получает строку с типом карты/счета и номером и возвращает замаскированную версию"""
@@ -29,12 +31,13 @@ def mask_account_card(input_string: str) -> str:
         return f"{type_name} {get_mask_card_number(number_int)}"
 
 
+def get_mask_account(account_number: int) -> str:
+    """Функция возвращает замаскированный банковский счет"""
+    last_four_digits = f"{account_number % 10000:04d}"
+    return f"**{last_four_digits}"
+
+
 def get_date(date_string: str) -> str:
     """Преобразует дату в формат дд.мм.гггг"""
-    dt = datetime.fromisoformat(date_string[:-7]) #Отрезание микросекунд
+    dt = datetime.fromisoformat(date_string[:-7])  # отрезание микросекунд
     return dt.strftime("%d.%m.%Y")
-
-
-
-
-
