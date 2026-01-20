@@ -1,5 +1,7 @@
 import pytest
-from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
+
 
 @pytest.fixture
 def transactions():
@@ -81,6 +83,7 @@ def transactions():
         }
     ]
 
+
 # Тесты для filter_by_currency
 def test_filter_by_currency(transactions):
     usd_transactions = list(filter_by_currency(transactions, "USD"))
@@ -94,6 +97,7 @@ def test_filter_by_currency(transactions):
     empty_transactions = list(filter_by_currency([], "EUR"))
     assert len(empty_transactions) == 0
 
+
 # Тесты для transaction_descriptions
 def test_transaction_descriptions(transactions):
     descriptions = list(transaction_descriptions(transactions))
@@ -105,6 +109,7 @@ def test_transaction_descriptions(transactions):
         "Перевод с карты на карту",
         "Перевод организации"
     ]
+
 
 # Тесты для card_number_generator
 def test_card_number_generator():
