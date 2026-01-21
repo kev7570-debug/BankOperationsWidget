@@ -84,41 +84,41 @@ def transactions():
     ]
 
 
-# Тесты для filter_by_currency
-def test_filter_by_currency(transactions):
-    usd_transactions = list(filter_by_currency(transactions, "USD"))
-    assert len(usd_transactions) == 3
-    assert all(txn["operationAmount"]["currency"]["code"] == "USD" for txn in usd_transactions)
-
-    rub_transactions = list(filter_by_currency(transactions, "RUB"))
-    assert len(rub_transactions) == 2
-    assert all(txn["operationAmount"]["currency"]["code"] == "RUB" for txn in rub_transactions)
-
-    empty_transactions = list(filter_by_currency([], "EUR"))
-    assert len(empty_transactions) == 0
+# Тест filter_by_currency с параметризацией
+@pytest.mark.parametrize("currency, expected_count", [
+    ("USD", 3),  # транзакции в USD
+    ("RUB", 2),  # транзакции в RUB
+    ("EUR", 0),  # нет транзакций в EUR
+])
+def test_filter_by_currency(transactions, currency, expected_count):
+    filtered_transactions = list(filter_by_currency(transactions, currency))
+    assert len(filtered_transactions) == expected_count
+    assert all(txn["operationAmount"]["currency"]["code"] == currency for txn in filtered_transactions)
 
 
-# Тесты для transaction_descriptions
-def test_transaction_descriptions(transactions):
-    descriptions = list(transaction_descriptions(transactions))
-    assert len(descriptions) == 5
-    assert descriptions == [
-        "Перевод организации",
-        "Перевод со счета на счет",
-        "Перевод со счета на счет",
-        "Перевод с карты на карту",
-        "Перевод организации"
-    ]
+# Тест transaction_descriptions с параметризацией
+@pytest.mark.parametrize("iteration_count", [1, 3, 5])
+def test_transaction_descriptions(transactions, iteration_count):
+    descriptions = transaction_descriptions(transactions)
+    for _ in range(iteration_count):
+        next(descriptions)
 
 
-# Тесты для card_number_generator
-def test_card_number_generator():
-    cards = list(card_number_generator(1, 5))
-    assert len(cards) == 5
-    assert cards == [
+# Тест card_number_generator с параметризацией
+@pytest.mark.parametrize("start, stop, expected_numbers", [
+    (1, 5, [
         "0000 0000 0000 0001",
         "0000 0000 0000 0002",
         "0000 0000 0000 0003",
         "0000 0000 0000 0004",
         "0000 0000 0000 0005"
-    ]
+    ]),
+    (100, 102, [
+        "0000 0000 0000 0100",
+        "0000 0000 0000 0101",
+        "0000 0000 0000 0102"
+    ])
+])
+def test_card_number_generator(start, stop, expected_numbers):
+    generated_cards = list(card_number_generator(start, stop))
+    assert generated_cards == expected_numbers

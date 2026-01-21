@@ -1,5 +1,3 @@
-# src/generators.py
-
 def filter_by_currency(transactions: list, currency: str):
     """
     Возвращает итератор, содержащий транзакции с заданной валютой.
