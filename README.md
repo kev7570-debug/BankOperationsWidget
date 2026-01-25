@@ -54,6 +54,15 @@ sorted_tx = sort_by_date(transactions)
 from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
 ```
 
+###### Модуль: Decorators 
+Модуль `decorators` предоставляет вспомогательную функцию — декоратор `log`, который позволяет регистрировать подробности выполнения функций, включая их аргументы, результаты и возникающие ошибки.
+
+### Использование декоратора:
+pythonfrom src.decorators import log
+@log(filename="mylog.txt")def my_function(x, y):    return x + y
+my_function(1, 2)
+
+
 ## Авторские права:
 Автор проекта: Кашина Елена
 Год: 2026

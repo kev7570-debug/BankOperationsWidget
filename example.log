@@ -1,0 +1,6 @@
+[2026-01-25 14:28:49] Function example_function(1, 2) returned 3
+[2026-01-25 14:28:49] Function error_function(3, 4) raised ValueError: This is an error.. Inputs: ((3, 4), {})
+[2026-01-25 14:31:29] Function example_function(1, 2) returned 3
+[2026-01-25 14:31:29] Function error_function(3, 4) raised ValueError: This is an error.. Inputs: ((3, 4), {})
+[2026-01-25 15:07:00] Function example_function(1, 2) returned 3
+[2026-01-25 15:07:00] Function error_function(3, 4) raised ValueError: This is an error.. Inputs: ((3, 4), {})
