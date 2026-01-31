@@ -1,9 +1,11 @@
 import os
+
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 API_KEY = os.getenv("EXCHANGE_RATES_API_KEY")
+
 
 def convert_to_rubles(transaction):
     amount = float(transaction['operationAmount']['amount'])
@@ -55,5 +57,5 @@ def convert_to_rubles(transaction):
 #     }
 
     # Конвертируем сумму в рубли
-    #result = convert_to_rubles(example_transaction)
+    # result = convert_to_rubles(example_transaction)
     # print(f"Сумма в рублях: {result}")

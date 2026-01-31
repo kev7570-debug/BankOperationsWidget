@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 
 def read_json(file_path):
     """
@@ -34,6 +35,7 @@ def read_json(file_path):
     except Exception as e:
         print(f"Произошла ошибка при чтении файла '{file_path}': {e}")
         return []
+
 
 # Пример вызова функции
 file_path = r"C:\Users\User\PycharmProjects\Domashka\data\operations.json"
