@@ -32,6 +32,15 @@ def read_json(file_path):
             else:
                 print(f"Ошибка: файл '{file_path}' не содержит список транзакций.")
                 return []
+
+    except FileNotFoundError:
+        print(f"Файл '{file_path}' не найден.")  # Четкость сообщения
+        return []
+
+    except json.JSONDecodeError:
+        print(f"Ошибка: некорректный формат JSON в файле '{file_path}'.")
+        return []
+
     except Exception as e:
         print(f"Произошла ошибка при чтении файла '{file_path}': {e}")
         return []
