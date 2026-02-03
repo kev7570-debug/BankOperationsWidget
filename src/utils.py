@@ -1,5 +1,24 @@
 import json
+import logging
 import os
+
+# Создаём логгер для модуля utils
+logger_utils = logging.getLogger(__name__)  # Имя логгера будет совпадать с именем модуля
+logger_utils.setLevel(logging.DEBUG)
+
+# Создаём обработчик для записи логов в файл
+logs_folder = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(logs_folder, exist_ok=True)
+log_file_path = os.path.join(logs_folder, 'utils.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel(logging.DEBUG)
+
+# Устанавливаем форматер для логов
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+file_handler.setFormatter(formatter)
+
+# Добавляем обработчик к логгеру
+logger_utils.addHandler(file_handler)
 
 
 def read_json(file_path):
@@ -9,10 +28,12 @@ def read_json(file_path):
     :param file_path: Путь к файлу JSON
     :return: Список словарей с данными о транзакциях или пустой список, если файл пуст или неверный
     """
+    logger_utils.info(f"Начинаем чтение файла {file_path}")
+
     try:
         # Проверяем существование файла
         if not os.path.exists(file_path):
-            print(f"Файл '{file_path}' не найден.")
+            logger_utils.error(f"Файл '{file_path}' не найден.")
             return []
 
         # Открываем файл с явным указанием кодировки utf-8
@@ -21,6 +42,7 @@ def read_json(file_path):
 
             # Если файл пустой, возвращаем пустой список
             if not content:
+                logger_utils.warning(f"Файл '{file_path}' пуст.")
                 return []
 
             # Пробуем разобрать JSON
@@ -28,21 +50,22 @@ def read_json(file_path):
 
             # Проверяем, является ли объект списком
             if isinstance(transactions, list):
+                logger_utils.info(f"Успешно прочитано {len(transactions)} транзакций из файла {file_path}")
                 return transactions
             else:
-                print(f"Ошибка: файл '{file_path}' не содержит список транзакций.")
+                logger_utils.error(f"Ошибка: файл '{file_path}' не содержит список транзакций.")
                 return []
 
     except FileNotFoundError:
-        print(f"Файл '{file_path}' не найден.")  # Четкость сообщения
+        logger_utils.error(f"Файл '{file_path}' не найден.")
         return []
 
     except json.JSONDecodeError:
-        print(f"Ошибка: некорректный формат JSON в файле '{file_path}'.")
+        logger_utils.error(f"Ошибка: некорректный формат JSON в файле '{file_path}'.")
         return []
 
     except Exception as e:
-        print(f"Произошла ошибка при чтении файла '{file_path}': {e}")
+        logger_utils.exception(f"Произошла ошибка при чтении файла '{file_path}': {e}")
         return []
 
 

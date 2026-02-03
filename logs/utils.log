@@ -1,0 +1,2 @@
+2026-02-03 22:35:30,836 - __main__ - INFO - Начинаем чтение файла C:\Users\User\PycharmProjects\Domashka\data\operations.json
+2026-02-03 22:35:31,045 - __main__ - INFO - Успешно прочитано 101 транзакций из файла C:\Users\User\PycharmProjects\Domashka\data\operations.json
