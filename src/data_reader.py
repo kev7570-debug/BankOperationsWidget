@@ -23,8 +23,15 @@ def read_csv(file_path: str) -> list:
     return transactions
 
 
-# Функция для чтения Excel-файла
 def read_excel(file_path: str) -> list:
+    """
+    Читает финансовый Excel-файл и возвращает список словарей с транзакциями.
+    Args:
+        file_path (str): Путь к Excel-файлу.
+
+    Returns:
+        list: Список словарей с транзакциями.
+    """
     df = pd.read_excel(file_path)
     records = df.where(df.notnull(), None).to_dict(orient='records')
     return [record for record in records if any(record.values())]
