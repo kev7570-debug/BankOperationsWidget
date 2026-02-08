@@ -62,6 +62,15 @@ pythonfrom src.decorators import log
 @log(filename="mylog.txt")def my_function(x, y):    return x + y
 my_function(1, 2)
 
+###### Модуль: Data_reader
+Модуль предоставляет функции для чтения финансовых транзакций из CSV- и Excel-файлов с использованием библиотеки pandas и csv.
+
+### Использование модуля:
+- **read_csv**: Читает финансовые транзакции из CSV-файла и возвращает список словарей.
+- **read_excel**: Читает финансовые транзакции из Excel-файла и возвращает список словарей.
+
+### Пример использования:
+from src.data_reader import read_csv, read_excel
 
 ## Авторские права:
 Автор проекта: Кашина Елена

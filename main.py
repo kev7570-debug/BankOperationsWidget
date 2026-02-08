@@ -97,22 +97,37 @@
 #     print(card_number)
 
 
-from src.decorators import log
+# from src.decorators import log
+#
+# # Демонстрация использования декоратора log
+# @log(filename="example.log")
+# def example_function(x, y):
+#     return x + y
+#
+# # Вызов декорированной функции
+# example_function(1, 2)
+#
+# # Демонстрация обработки ошибки
+# @log(filename="example.log")
+# def error_function(x, y):
+#     raise ValueError("This is an error.")
+#
+# try:
+#     error_function(3, 4)
+# except ValueError:
+#     pass  # Игнорируем ошибку для демонстрационного примера
 
-# Демонстрация использования декоратора log
-@log(filename="example.log")
-def example_function(x, y):
-    return x + y
 
-# Вызов декорированной функции
-example_function(1, 2)
+from src.data_reader import read_csv, read_excel
 
-# Демонстрация обработки ошибки
-@log(filename="example.log")
-def error_function(x, y):
-    raise ValueError("This is an error.")
+# Пример вызова функций
+csv_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions.csv'
+excel_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions_excel.xlsx'
 
-try:
-    error_function(3, 4)
-except ValueError:
-    pass  # Игнорируем ошибку для демонстрационного примера
+# Чтение CSV-файла
+csv_transactions = read_csv(csv_file_path)
+print("Транзакции из CSV:", csv_transactions)
+
+# Чтение Excel-файла
+excel_transactions = read_excel(excel_file_path)
+print("Транзакции из Excel:", excel_transactions)
