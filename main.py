@@ -118,16 +118,92 @@
 #     pass  # Игнорируем ошибку для демонстрационного примера
 
 
-from src.data_reader import read_csv, read_excel
+# from src.data_reader import read_csv, read_excel
+#
+# # Пример вызова функций
+# csv_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions.csv'
+# excel_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions_excel.xlsx'
+#
+# # Чтение CSV-файла
+# csv_transactions = read_csv(csv_file_path)
+# print("Транзакции из CSV:", csv_transactions)
+#
+# # Чтение Excel-файла
+# excel_transactions = read_excel(excel_file_path)
+# print("Транзакции из Excel:", excel_transactions)
 
-# Пример вызова функций
-csv_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions.csv'
-excel_file_path = r'C:\Users\User\PycharmProjects\Domashka\data\transactions_excel.xlsx'
 
-# Чтение CSV-файла
-csv_transactions = read_csv(csv_file_path)
-print("Транзакции из CSV:", csv_transactions)
 
-# Чтение Excel-файла
-excel_transactions = read_excel(excel_file_path)
-print("Транзакции из Excel:", excel_transactions)
+# src/main.py
+
+from src.data_reader import read_csv, read_excel, read_json
+from src.search import process_bank_search
+from src.statistics import process_bank_operations
+
+
+def main():
+    print("Привет! Добро пожаловать в программу работы с банковскими транзакциями.")
+    print("Выберите необходимый пункт меню:")
+    print("1. Получить информацию о транзакциях из JSON-файла")
+    print("2. Получить информацию о транзакциях из CSV-файла")
+    print("3. Получить информацию о транзакциях из XLSX-файла")
+
+    choice = input("Ваш выбор: ")
+    if choice == '1':
+        data = read_json('./data/operations.json')
+    elif choice == '2':
+        data = read_csv('./data/transactions.csv')
+    elif choice == '3':
+        data = read_excel('./data/transactions_excel.xlsx')
+    else:
+        print("Недопустимый выбор.")
+        return
+
+    # Фильтрация по статусу
+    valid_statuses = ['EXECUTED', 'CANCELED', 'PENDING']
+    while True:
+        status_choice = input("Введите статус операций для фильтрации (EXECUTED/CANCELED/PENDING): ").upper()
+        if status_choice in valid_statuses:
+            break
+        else:
+            print(f"Статус операции \"{status_choice}\" недоступен.")
+
+    # Применяем фильтр по статусу
+    filtered_data = [txn for txn in data if str(txn.get('state', '')).upper() == status_choice]
+
+    # Сортировка по дате
+    sort_choice = input("Отсортировать операции по дате? (Да/Нет): ").lower()
+    if sort_choice == 'да':
+        ascending_choice = input("Сортировать по возрастанию или по убыванию? (Возрастание/Убывание): ").lower()
+        filtered_data.sort(key=lambda x: x['date'], reverse=(ascending_choice == 'убывание'))
+
+    # Фильтрация по валюте
+    currency_choice = input("Выводить только рублевые транзакции? (Да/Нет): ").lower()
+    if currency_choice == 'да':
+        filtered_data = [
+            txn for txn in filtered_data
+            if txn.get('operationAmount', {}).get('currency', {}).get('code') == 'RUB'
+        ]
+
+    # Поиск по словам в описании
+    search_choice = input("Отфильтровать список транзакций по определенному слову в описании? (Да/Нет): ").lower()
+    if search_choice == 'да':
+        search_term = input("Введите слово для поиска: ")
+        filtered_data = process_bank_search(filtered_data, search_term)
+
+    # Вывод итогового списка операций
+    print("Итоговый список транзакций:")
+    if filtered_data:
+        for idx, txn in enumerate(filtered_data):
+            amount = txn.get('operationAmount', {}).get('amount', 'N/A')
+            currency = txn.get('operationAmount', {}).get('currency', {}).get('name', 'N/A')
+            print(
+                f"{idx + 1}. Дата: {txn.get('date', '')}, Сумма: {amount} {currency}, "
+                f"Описание: {txn.get('description', '')}"
+            )
+    else:
+        print("Не найдено ни одной транзакции, соответствующей условиям фильтрации.")
+
+
+if __name__ == '__main__':
+    main()

@@ -72,6 +72,28 @@ my_function(1, 2)
 ### Пример использования:
 from src.data_reader import read_csv, read_excel
 
+###### Модули: Search_py и Statistics.py + Data_reader
+- **`src/data_reader.py`**: Модуль для чтения данных из файлов (JSON, CSV, Excel).
+- **`src/search.py`**: Модуль для поиска транзакций по заданным критериям.
+- **`src/statistics.py`**: Модуль для агрегирования данных по категориям.
+- **`src/main.py`**: Основной модуль, организующий взаимодействие с пользователем и связывающий все компоненты проекта.
+
+## Модули и их функциональность
+### `search.py`
+Модуль предоставляет функцию для поиска транзакций по заданной строке в описании. Поддерживает поиск с использованием регулярных выражений.
+
+**Пример использования:**
+pythonfrom src.search import process_bank_search
+data = [...]search_term = "операция"results = process_bank_search(data, search_term)
+
+### `statistics.py`
+Модуль предоставляет функцию для подсчета количества транзакций по заданным категориям.
+
+**Пример использования:**
+pythonfrom src.statistics import process_bank_operations
+data = [...]categories = ["Категория 1", "Категория 2"]stats = process_bank_operations(data, categories)
+
+
 ## Авторские права:
 Автор проекта: Кашина Елена
 Год: 2026
